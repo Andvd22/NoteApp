@@ -2,18 +2,22 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id ("kotlin-parcelize")
-    id("com.google.devtools.ksp")
-    id ("androidx.navigation.safeargs")
+    // SỬA: Dùng alias cho KSP
+    alias(libs.plugins.ksp)
+    // SỬA: Dùng alias cho Navigation SafeArgs
+    alias(libs.plugins.navigation.safeargs)
 }
 
 android {
     namespace = "com.example.noteapp"
-    compileSdk = 36
+    // SỬA: HẠ compileSdk về bản ổn định (34)
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.noteapp"
         minSdk = 24
-        targetSdk = 36
+        // SỬA: HẠ targetSdk về bản ổn định (34)
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -54,18 +58,26 @@ dependencies {
 
 
     // ROOM
-    val roomVersion = "2.6.1"
+    // SỬA: Sử dụng version từ toml
+    val roomVersion = libs.versions.room.get()
     implementation ("androidx.room:room-runtime:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
+
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+    // SỬA: Sử dụng version 1.8.1 (từ toml)
+    val coroutinesVersion = libs.versions.coroutines.get()
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
     implementation ("androidx.room:room-ktx:$roomVersion")
+
     // Navigation
-    val navVersion = "2.7.5"
+    // SỬA: Sử dụng version 2.7.5 (từ toml)
+    val navVersion = libs.versions.nav.get()
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
+
     // Life Cycle Arch
-    val lifecycleVersion = "2.6.2"
+    // SỬA: Sử dụng version 2.7.0 (từ toml)
+    val lifecycleVersion = libs.versions.lifecycle.get()
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     // LiveData
